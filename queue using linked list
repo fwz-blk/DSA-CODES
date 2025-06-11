@@ -1,0 +1,89 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node {
+    int data;
+    struct node *next;
+
+};
+
+struct node *head=NULL;
+
+//global declaration
+
+void createList(int x){
+
+    struct node*temp=NULL;
+
+    temp=(struct node*)malloc(sizeof(struct node));
+
+    temp->data=x;
+    temp->next=NULL;
+
+    head=temp;
+}//createList()
+
+void enque(int val){
+    struct node* newnode=NULL;
+    struct node* temp=head;
+
+    newnode=(struct node*)malloc(sizeof(struct node));
+
+    newnode->data=val;
+
+    newnode->next=NULL;
+
+    if(head==NULL){
+        head=newnode;
+        
+    }
+    else{
+        while(temp->next!=NULL){
+            temp=temp->next;
+        }
+
+        temp->next=newnode;
+    }
+    
+}   
+
+
+void deque(){
+    struct node*temp=head;
+
+    struct node*select=head;
+
+    head=select->next;
+
+    free(temp);
+
+
+
+}
+
+
+void print(){
+    struct node*temp=head;
+
+    while(temp!=NULL){
+        printf("%d\n",temp->data);
+        temp=temp->next;
+        
+    }
+    printf("\n");
+    return;
+
+}
+
+
+
+void main(){
+    enque(10);
+    enque(20);
+    enque(90);
+    enque(40);
+    print();
+    deque();
+    print();
+
+}
