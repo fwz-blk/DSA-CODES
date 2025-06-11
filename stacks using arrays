@@ -1,0 +1,49 @@
+#include<stdio.h>
+
+#define size 10
+
+int top = -1;
+int arr[size];
+//global definition
+
+void push(int x){
+    if(top== size-1){
+        printf("stack is full!\n");
+    }
+    top++;
+    arr[top]=x;
+
+}//void 
+
+
+void pop(){
+    if(top==-1){
+        printf("stack is empty\n");
+    }
+
+    top--;
+}
+
+void print(){
+    int a=top;
+    if(a==-1){
+        printf("stack is empty!\n");
+
+    }
+
+    while(a!=-1){
+        printf(" %d\n",arr[a]);
+        a--;
+    }
+}
+
+
+void main(){
+    push(10);
+    push(20);
+    push(30);
+    push(69);
+    print();
+    pop();
+    print();
+}
