@@ -1,0 +1,85 @@
+#include <stdio.h>
+
+#define SIZE 10
+#define EMPTY -1
+#define DELETED -2
+        
+int hashTable[SIZE];
+
+void init() {
+    for (int i = 0; i < SIZE; i++)
+        hashTable[i] = EMPTY;
+}
+
+int hash(int key) {
+    return key % SIZE;
+}
+
+void insert(int key) {
+    int index = hash(key);
+    int i = 0;
+    while (hashTable[(index + i) % SIZE] != EMPTY && hashTable[(index + i) % SIZE] != DELETED)
+        i++;
+    hashTable[(index + i) % SIZE] = key;
+}
+
+int search(int key) {
+    int index = hash(key);
+    int i = 0;
+    while (i < SIZE) {
+        int probe = (index + i) % SIZE;
+        if (hashTable[probe] == EMPTY) // key not found
+            return -1;
+        if (hashTable[probe] == key)
+            return probe;
+        i++;
+    }
+    return -1;
+}
+
+void deleteKey(int key) {
+    int pos = search(key);
+    if (pos != -1) {
+        hashTable[pos] = DELETED;
+        printf("Deleted key %d at index %d\n", key, pos);
+    } else {
+        printf("Key %d not found\n", key);
+    }
+}
+
+void display() {
+    for (int i = 0; i < SIZE; i++) {
+        printf("[%d] = ", i);
+        if (hashTable[i] == EMPTY)
+            printf("EMPTY\n");
+        else if (hashTable[i] == DELETED)
+            printf("DELETED\n");
+        else
+            printf("%d\n", hashTable[i]);
+    }
+}
+
+int main() {
+    init();
+
+    insert(10);
+    insert(20);
+    insert(15);
+    insert(25);
+
+    printf("Hash Table using Linear Probing:\n");
+    display();
+
+    printf("\nSearch 15: ");
+    int pos = search(15);
+    if (pos != -1)
+        printf("Found at index %d\n", pos);
+    else
+        printf("Not found\n");
+
+    printf("\nDeleting 15...\n");
+    deleteKey(15);
+    display();
+
+    return 0;
+}
